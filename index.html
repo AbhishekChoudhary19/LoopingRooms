@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>loopingrooms</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      
+      min-height: 100vh;
+    }
+
+    .bottom-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border-radius: 25px;
+  padding: 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  transition: transform 0.3s ease-in-out;
+}
+
+.bottom-nav a {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: 14px;
+  flex: 1;
+  padding: 10px;
+  border-radius: 15px;
+  transition: background 0.3s;
+}
+
+.bottom-nav a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Hiding effect on scroll down */
+.bottom-nav.hide {
+  transform: translate(-50%, 100%);
+}
+
+      /* Floating Icon Button */
+  #musicToggleBtn {
+    
+    bottom: 20px;
+    
+    color: white;
+    border: none;
+    padding: 12px;
+    
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    
+  
+  
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: rgb(44, 38, 38);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+  
+  
+
+
+  /* Popup Music Player */
+  #musicPlayerPopup {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 280px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 999;
+  }
+
+  input[type="range"] {
+    width: 100%;
+  }
+
+  .track-info img {
+    border-radius: 10px;
+  }
+.music-player {
+  background: rgba(255, 255, 255, 0.15); /* slightly more transparent */
+  backdrop-filter: blur(25px) saturate(150%);
+  -webkit-backdrop-filter: blur(25px) saturate(150%);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2); /* optional frosted border */
+  border-radius: 20px;
+  padding: 15px 20px;
+  color: white;
+  text-align: center;
+  width: 280px;
+  animation: fadeIn 1s ease;
+  margin-left: 75%;
+}
+
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .track-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .cover {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .track-title {
+      font-size: 14px;
+      flex: 1;
+      text-align: left;
+    }
+
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0;
+    }
+
+    .time {
+      font-size: 12px;
+      width: 35px;
+    }
+
+    .progress {
+      flex: 1;
+      appearance: none;
+      height: 5px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 5px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .progress::-webkit-slider-thumb {
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 8px;
+    }
+
+    .btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.35);
+      transform: scale(1.1);
+    }
+
+    .volume {
+      width: 80px;
+      appearance: none;
+      height: 4px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 5px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .volume::-webkit-slider-thumb {
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+
+
+
+    .overlay {
+      transition: all 0.3s ease-in-out;
+    }
+    
+
+    .card-container {
+      margin-left: 40px;
+      margin-top: 35px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: #111;
+      width: 300px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-content h4 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    .card-content p {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: white;
+      font-weight: bold;
+    }
+
+    .card-content span {
+      font-size: 14px;
+      color: #999;
+    }
+
+    .chat-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgb(44, 38, 38);
+      color: white;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+
+    /* Chat window */
+    .chatbot {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 300px;
+      background: rgb(71, 71, 71);
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      overflow: hidden;
+      display: none; /* Hidden by default */
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .chat-header {
+      background-color: rgb(71, 71, 71);
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .chat-box {
+      height: 250px;
+      overflow-y: auto;
+      padding: 10px;
+      background: #aaa9a9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-box .bot-msg,
+    .chat-box .user-msg {
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    .bot-msg {
+      background-color: #1d1c1c;
+      align-self: flex-start;
+      border-radius: 25px;
+    }
+
+    .user-msg {
+      background-color: rgb(71, 71, 71);
+      align-self: flex-end;
+      text-align: right;
+      border-radius: 25px;
+    }
+
+    form {
+      display: flex;
+      border-top: 0px solid rgb(71, 71, 71);
+    }
+
+    input[type="text"] {
+      flex: 1;
+      border: none;
+      padding: 10px;
+      font-size: 14px;
+      outline: none;
+      color:black;
+      border-radius:3px;
+    }
+
+    button {
+      background-color: #505350;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      
+    }
+
+    button:hover {
+      background-color: #000000;
+    }
+  </style>
+</head>
+ <!-- Bottom Navigation Bar -->
+ <div class="bottom-nav">
+  <a href="index.html">Home</a>
+  <a href="standings.html">Standings</a>
+  <a href="ai.html">Ai</a>
+  <a href="signin.html">signin</a>
+  
+</div>
+
+<body class="bg-black text-white font-sans">
+
+  
+  <div id="sideMenu" class="fixed top-0 left-0 h-full w-0 bg-black z-50 overflow-x-hidden overlay">
+    <div class="flex flex-col h-full">
+      <div class="flex justify-between items-center px-6 py-4 border-b border-gray-800">
+        <img src="reshot-icon-tracking-code-JEUW28QTZX.svg" alt="Logo" class="h-8">
+        <button onclick="toggleMenu()" class="text-white text-3xl">&times;</button>
+      </div>
+      <nav class="flex flex-col px-6 py-4 space-y-4 font-bold text-lg">
+        <a href="index.html">HOME</a>
+        <a href="news.html">NEWS</a>
+        <a href="about.html">ABOUT</a>
+        <a href="https://www.linkedin.com/in/abhishek-choudhary-a7b58528b">CONNECT</a>
+        <a href="https://abhishekchoudhary19.github.io/portfolio-website/">PORTFOLIO</a>
+      </nav>
+    </div>
+  </div>
+
+  
+  <header class="flex items-center justify-between px-6 py-4 bg-black border-b border-gray-800 z-40 relative">
+    <div class="flex items-center space-x-4">
+      <button onclick="toggleMenu()" class="text-white text-2xl">&#9776;</button>
+      <img src="reshot-icon-tracking-code-JEUW28QTZX.svg" alt="Logo" class="h-10">
+      <span class="text-lg font-semibold">Looping Rooms</span>
+    </div>
+    <div class="hidden md:flex items-center space-x-6 text-sm">
+      <a href="index.html" class="hover:text-gray-300">HOME</a>
+      
+      <a href="standings.html" class="hover:text-gray-300">STANDINGS</a>
+      <a href="news.html"  class="hover:text-gray-300">NEWS</a>
+      <a href="ai.html"  class="hover:text-gray-300">AI </a>
+      <a href="about.html"  class="hover:text-gray-300">ABOUT</a>
+     <a href="signin.html"  ><button class="hover:text-gray-300">SIGN IN</button></a>
+    </div>
+  </header>
+
+  
+  <section class="overflow-x-auto whitespace-nowrap px-4 py-4 bg-black border-b border-gray-800">
+    <div class="inline-flex space-x-6">
+      
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="elon-musk.gif"class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Brain Implants(xAI) </span>
+      </div></a>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="genai.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Generative AI</span>
+      </div>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="ARVR.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Extended Reality</span>
+      </div>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="source.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Internet of Things</span>
+      </div>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="precision-medicine.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Personalized Medicine</span>
+      </div>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="cs.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Cybersecurity</span>
+      </div>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="NEURO.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Neuromorphic Computing</span>
+      </div>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="ai.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Ai Agents</span>
+      </div>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="SPATIAL.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Spatial Computing</span>
+      </div>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="Say-cheese-for-no-code-applications.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Low-Code/No-Code</span>
+      </div>
+      <div class="flex flex-col items-center text-center w-24">
+        <img src="crypto.gif" class="rounded-full border-2 border-white h-20 w-20 object-cover" alt="">
+        <span class="text-xs mt-2">Cryptography</span>
+      </div>
+      
+      
+    </div>
+  </section>
+
+<br>  
+  <section class="relative h-[500px] bg-cover bg-center" style="background-image: url('tropy.jpg');  border-radius: 25px;
+  overflow: hidden;">
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-8">
+      <h2 class="text-xl italic mb-2">WHY LOOPING ROOMS?</h2>
+      <h1 class="text-4xl md:text-6xl font-bold">Coding in Loops<br>Experimental room vibe<br></h1>
+    </div>
+  </section>
+
+
+  <div class="champions">
+   <center> <h1><h1></h1></center>
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <img src="Capture.JPG" alt="Day 3"/>
+      <div class="card-content">
+        <h4>No Code</h4>
+        <p>No Coding at all | use Ai tools</p>
+        <span></span>
+      </div>
+    </div>
+
+    <div class="card">
+     <a href="codingplatform.html"> <img src="intro-1.jpg" alt="Day 2"/>
+      <div class="card-content">
+        <h4>Coding Platform</h4>
+        <p>Try our coding platform | check stats | Leadrboards</p>
+        <span></span>
+      </div></a>
+    </div>
+
+    <div class="card">
+      <a href="https://github.com/AbhishekChoudhary19"><img src="social.gif" alt="Day 1"/>
+      <div class="card-content">
+        <h4>Connect here</h4>
+        <p> Wanna social networks?? | Follow us</p>
+        <span></span>
+      </div></a>
+    </div>
+
+    <div class="card">
+      <a href="https://buymeacoffee.com/abychoudhari"><img src="coffee.JPG" alt="Day 1"/>
+        <div class="card-content">
+          <h4></h4>
+          <p>Buy me a coffee | crispicheno please</p>
+          <span></span>
+        </div>
+      </div></a>
+  </div>
+
+
+
+
+<br><br>  <section class="relative h-[500px] bg-cover bg-center" style="background-image: url('Pixilart\ -\ Live\ on.gif'); border-radius: 25px;
+  overflow: hidden;">
+    <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center px-8">
+      <h2 class="text-xl italic mb-2">Introducing New Coding Platform</h2>
+      <h1 class="text-4xl md:text-6xl font-bold">Learn about tools and techs<br>with pixelate vibe<br></h1>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+  
+
+<section class="relative h-[600px] bg-cover bg-center" style="background-image: url('3.gif'); border-radius: 25px; overflow: hidden;">
+  <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center px-8 text-white">
+    <h2 class="text-xl italic mb-2">Share your thoughts | ideas here</h2>
+    <h1 class="text-4xl md:text-6xl font-bold mb-6">Start your journey.</h1>
+
+    <!-- Glass Blog Card -->
+    <div class="backdrop-blur-lg bg-white/10 border border-white/30 rounded-2xl p-6 max-w-xl transition-all duration-300 hover:scale-105 shadow-xl">
+      <h3 class="text-2xl font-semibold mb-3">Warning!! Be Creative</h3>
+      <textarea placeholder="Write your blog..." class="w-full p-3 bg-white/10 text-white rounded-md border border-white/20 focus:outline-none focus:ring-2 focus:ring-white placeholder:text-gray-300 mb-4" rows="4"></textarea>
+      <button class="px-5 py-2 rounded-lg bg-white text-black font-semibold hover:bg-gray-100 transition">Post Blog</button>
+    </div>
+  </div>
+</section>
+
+
+<br>
+<footer class="bg-black text-white py-10 px-4">
+  <div class="flex justify-center space-x-6 mb-6">
+    <!-- Social Icons -->
+    <a href="https://www.linkedin.com/in/abhishek-choudhary-a7b58528b?original_referer=https%3A%2F%2Fgithub.com%2F" class="border border-white rounded-full p-2 hover:bg-white hover:text-black transition">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+    
+    <a href="https://github.com/AbhishekChoudhary19/" class="border border-white rounded-full p-2 hover:bg-white hover:text-black transition">
+      <i class="fab fa-github"></i>
+    </a>
+  </div>
+
+  <!-- Footer Navigation -->
+  
+
+  <hr class="border-gray-700 mb-4">
+
+  <!-- Brand & Copyright -->
+  <div class="text-center">
+    <h2 class="mx-auto h-10 mb-2">Looping Rooms</h2>
+    <p class="text-sm text-gray-400">Copyright 2025 Looping Rooms. All rights reserved.</p>
+  </div>
+</footer>
+
+
+
+  <script>
+    function toggleMenu() {
+      const sideMenu = document.getElementById("sideMenu");
+      if (sideMenu.style.width === "250px") {
+        sideMenu.style.width = "0";
+      } else {
+        sideMenu.style.width = "250px";
+      }
+    }
+  </script>
+
+
+<div class="chat-icon" id="chat-toggle">💬</div>
+
+  <!-- Chatbot Popup -->
+  <div class="chatbot" id="chatbot">
+    <div class="chat-header">Chat with Us</div>
+    <div class="chat-box" id="chat-box">
+      <div class="bot-msg">Hi! How can I help you?</div>
+    </div>
+    <form id="chat-form">
+      <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off"/>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatbot = document.getElementById('chatbot');
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('user-input');
+    const chatBox = document.getElementById('chat-box');
+
+    // Toggle chat visibility
+    chatToggle.addEventListener('click', () => {
+      chatbot.style.display = chatbot.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Handle form submit
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const userMsg = input.value.trim();
+      if (userMsg) {
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user-msg';
+        userDiv.textContent = userMsg;
+        chatBox.appendChild(userDiv);
+
+        const botDiv = document.createElement('div');
+        botDiv.className = 'bot-msg';
+        botDiv.textContent = 'Thanks! We will get back to you.';
+        chatBox.appendChild(botDiv);
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+        input.value = '';
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+
+<body class="bg-gray-900 text-white">
+
+<!-- Floating Music Icon Button -->
+<button id="musicToggleBtn" title="Open Music Player">🎵</button>
+
+<!-- Popup Music Player -->
+
+<div id="musicPlayerPopup" style="display: none;">
+  <div class="track-info text-center">
+    <img src="pixel-art-12601_256.gif" alt="Album Art" class="w-24 h-24 mx-auto" id="coverImg">
+    <div class="mt-2 font-semibold" id="trackTitle">Bored? OK Listen now!!</div>
+  </div>
+
+  <div class="spotify-player mt-3">
+    <iframe style="border-radius:12px"
+      src="https://open.spotify.com/embed/playlist/37i9dQZF1DX6bnzK9KPvrz?si=lZqj5blPQeGOfLsc9S1q8Q"
+      width="99%" height="152" frameBorder="0" allowfullscreen="" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script>const toggleBtn = document.getElementById('musicToggleBtn');
+  const playerPopup = document.getElementById('musicPlayerPopup');
+  
+  toggleBtn.addEventListener('click', () => {
+    playerPopup.style.display = playerPopup.style.display === 'block' ? 'none' : 'block';
+  });
+  </script> 
+
+
+
+
+<script>
+  let lastScrollTop = 0;
+  const navbar = document.querySelector('.bottom-nav');
+
+  window.addEventListener("scroll", function () {
+    let scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      // Scrolling down
+      navbar.classList.add("hide");
+    } else {
+      // Scrolling up
+      navbar.classList.remove("hide");
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  }, false);
+</script>
+
+
+
+
+
+
+</body>
+</html>

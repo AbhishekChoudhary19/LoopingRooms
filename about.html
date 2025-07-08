@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | Looping Rooms</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #0e0e0e;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .glow:hover {
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="relative">
+
+  <!-- Header -->
+  <header class="text-center py-6">
+    <h1 class="text-4xl font-extrabold tracking-wide text-cyan-400">About Looping Rooms</h1>
+    <p class="text-gray-400 mt-2 italic">Decoding the Future, One Loop at a Time</p>
+  </header>
+
+  <!-- About Section -->
+  <section class="px-6 md:px-20 py-10">
+    <div class="max-w-4xl mx-auto bg-gray-900 p-6 rounded-2xl shadow-xl fade-in-up">
+      <h2 class="text-2xl md:text-3xl font-semibold text-white mb-4">Who We Are</h2>
+      <p class="text-gray-300 leading-relaxed text-lg">
+        <strong>Looping Rooms</strong> is your experimental space where technology, design, and development converge.
+        We explore futuristic trends in AI, Cybersecurity, Neurotech, and beyond—helping developers, engineers, and tech
+        lovers stay ahead of the curve with curated interactive content, insights, and innovation loops.
+      </p>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="px-6 md:px-20 py-10">
+    <div class="grid md:grid-cols-2 gap-10 fade-in-up">
+      <div class="bg-[#1a1a1a] p-6 rounded-xl glow">
+        <img src="pfp.jpeg" alt="pfp" class="w-24 h-24 rounded-full border-4 border-cyan-400 mb-4">
+        <h3 class="text-xl font-bold text-white">Abhishek Choudhary</h3>
+        <p class="text-gray-400 mt-2">Cross-Platform Developer • Explorer of Code & Cognitive Systems</p>
+        <p class="text-sm text-gray-500 mt-3">Passionate about blending design with development, building interactive tech zones and experimental playgrounds like Looping Rooms.</p>
+      </div>
+
+      <div class="bg-[#1a1a1a] p-6 rounded-xl glow">
+        <h3 class="text-xl font-bold text-white mb-3">Our Stack & Tools</h3>
+        <div class="flex flex-wrap gap-3">
+          <span class="bg-cyan-800 text-sm px-3 py-1 rounded-full text-white">TailwindCSS</span>
+          <span class="bg-purple-800 text-sm px-3 py-1 rounded-full text-white">JavaScript</span>
+          <span class="bg-yellow-700 text-sm px-3 py-1 rounded-full text-white">HTML5</span>
+          <span class="bg-pink-800 text-sm px-3 py-1 rounded-full text-white">CSS3</span>
+          <span class="bg-gray-700 text-sm px-3 py-1 rounded-full text-white">3D Canvas</span>
+          <span class="bg-green-700 text-sm px-3 py-1 rounded-full text-white">APIs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision Section -->
+  <section class="px-6 md:px-20 py-10">
+    <div class="bg-gradient-to-r from-cyan-900 to-blue-800 p-6 rounded-2xl shadow-xl fade-in-up">
+      <h2 class="text-2xl font-semibold text-white mb-4">Our Vision</h2>
+      <p class="text-white text-lg leading-relaxed">
+        To create a connected space where developers don’t just learn trends—they shape them.
+        From AI experiments to real-world code labs, we want you to explore the **rooms of the future**.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 text-gray-500 text-sm">
+    &copy; 2025 Looping Rooms. Built by Abhishek Choudhary.
+  </footer>
+
+  <!-- Scroll Animation -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    });
+
+    document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

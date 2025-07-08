@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechTrends - Interactive News</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #000;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .news-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .news-card:hover {
+      transform: scale(1.04);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .animated-title {
+      animation: slideIn 1s ease-out forwards;
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+
+    @keyframes slideIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated Title -->
+  <div class="text-center pt-10 pb-4">
+    <h2 class="text-3xl font-bold animated-title tracking-wide">
+      📰 Latest <span class="text-cyan-400">Tech, Coding & Engineering</span> News
+    </h2>
+    <p class="text-gray-400 mt-2 text-sm">Updated live from real industry trends</p>
+  </div>
+
+  <!-- News Section -->
+  <section class="px-6 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+
+      <!-- Card Template -->
+      <div class="bg-gray-800 rounded-xl p-4 news-card">
+        <img src="https://images.wsj.net/im-42428774?width=700&size=1.499" class="rounded-md mb-3 w-full h-48 object-cover"/>
+        <h3 class="text-lg font-semibold">💻 Morgan Stanley Saves 280K Dev Hours</h3>
+        <p class="text-sm text-gray-300 mt-2">AI tool converts legacy COBOL to English specs, saving dev time.</p>
+        <a href="https://www.wsj.com/articles/how-morgan-stanley-tackled-one-of-codings-toughest-problems-4f465959" target="_blank" class="text-blue-400 text-sm mt-2 inline-block">Read more →</a>
+      </div>
+
+      <div class="bg-gray-800 rounded-xl p-4 news-card">
+        <img src="https://s3.us-east-1.amazonaws.com/skillsoft.com/prod/images/Blog_Graphic-Request_1200x800_2.png" class="rounded-md mb-3 w-full h-48 object-cover"/>
+        <h3 class="text-lg font-semibold">👨‍💻 Top Skills for Future Engineers</h3>
+        <p class="text-sm text-gray-300 mt-2">Coding depth, research, and adaptability are key developer traits.</p>
+        <a href="https://www.skillsoft.com/blog/the-top-10-software-developer-skills-for-2023" target="_blank" class="text-blue-400 text-sm mt-2 inline-block">Read more →</a>
+      </div>
+
+      <div class="bg-gray-800 rounded-xl p-4 news-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjo5M_ixMJMAJM3gJKsvE29kbIChnbJPyjyg&s" class="rounded-md mb-3 w-full h-48 object-cover"/>
+        <h3 class="text-lg font-semibold">🎶 “Vibe Coding” Gets Real</h3>
+        <p class="text-sm text-gray-300 mt-2">Natural-language code generation grows. But security concerns rise.</p>
+        <a href="https://dev.to/arjun98k/vibe-coding-the-future-of-ai-driven-software-development-51ab" target="_blank" class="text-blue-400 text-sm mt-2 inline-block">Read more →</a>
+      </div>
+
+      <div class="bg-gray-800 rounded-xl p-4 news-card">
+        <img src="https://colaninfotech.com/wp-content/uploads/2025/06/ai-agent-in-company-workflows-2025.jpg" class="rounded-md mb-3 w-full h-48 object-cover"/>
+        <h3 class="text-lg font-semibold">⚙️ AI Agents Save Dev Time</h3>
+        <p class="text-sm text-gray-300 mt-2">ServiceNow: devs save 30% of time with copilots and task agents.</p>
+        <a href="https://timesofindia.indiatimes.com/city/bengaluru/ai-agents-boost-developer-productivity/articleshow/121712411.cms" target="_blank" class="text-blue-400 text-sm mt-2 inline-block">Read more →</a>
+      </div>
+
+      <div class="bg-gray-800 rounded-xl p-4 news-card">
+        <img src="https://i.ytimg.com/vi/hbMIRgx2FpU/maxresdefault.jpg" class="rounded-md mb-3 w-full h-48 object-cover"/>
+        <h3 class="text-lg font-semibold">🚀 AI Startups Explode in Value</h3>
+        <p class="text-sm text-gray-300 mt-2">Code-gen startups see huge VC funding — sky-high 2025 valuations.</p>
+        <a href="https://www.reuters.com/business/ai-vibe-coding-startups-burst-onto-scene-with-sky-high-valuations-2025-06-03/" target="_blank" class="text-blue-400 text-sm mt-2 inline-block">Read more →</a>
+      </div>
+
+      <div class="bg-gray-800 rounded-xl p-4 news-card">
+        <img src="https://www.servicenow.com/blogs/2024/media_1b9ac460fb9ac57a30a43e67421324cfc3f835ff4.png?width=2000&format=webply&optimize=medium" class="rounded-md mb-3 w-full h-48 object-cover"/>
+        <h3 class="text-lg font-semibold">📈 AI Reshaping Dev Careers</h3>
+        <p class="text-sm text-gray-300 mt-2">Engineers shift to AI orchestration roles by 2026, says ServiceNow CTO.</p>
+        <a href="https://www.servicenow.com/blogs/2024/how-ai-changing-jobs-india" target="_blank" class="text-blue-400 text-sm mt-2 inline-block">Read more →</a>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

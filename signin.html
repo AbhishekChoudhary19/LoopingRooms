@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In - Mirror Style</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0eafc, #cfdef3); /* fallback */
+      background-image: url('https://devpa.qls.com.au/assets/images/b2c_signin_background.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .glass-box {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 25px;
+      padding: 40px;
+      width: 90%;
+      max-width: 380px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      color: #111;
+      text-align: center;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 25px;
+      color: #111;
+    }
+
+    input {
+      
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      color: #111;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input::placeholder {
+      color: #666;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 16px;
+      background: #fff;
+      border: 1px solid #999;
+      border-radius: 14px;
+      color: #111;
+      font-size: 17px;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #00000057;
+    }
+
+    .btn.secondary {
+      background: #ffffff;
+      margin-top: 10px;
+    }
+    .btn.secondary:hover{
+      background: #00000057;
+    }
+
+    .bottom-text {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .bottom-text a {
+      color: #222;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body  style="background-image: url('https://devpa.qls.com.au/assets/images/b2c_signin_background.jpg');">
+
+
+  <div class="glass-box">
+    <h2>🔥 "Why wait? Sign in now and unlock the experience!"</h2>
+    <input type="email" style="margin-left: -12px;" placeholder="Email" id="email">
+    <input type="password" style="margin-left: -12px;" placeholder="Password" id="password">
+    
+    <button class="btn" onclick="logIn()">Log In</button>
+    <button class="btn secondary" onclick="signUp()">Sign Up</button>
+    
+    <div class="bottom-text">
+      Read | Learn | Implement
+    </div>
+  </div>
+
+  <script>
+    function logIn() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if(email && password){
+        alert(`Logging in as: ${email}`);
+      } else {
+        alert("Please enter both email and password.");
+      }
+    }
+
+    function signUp() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if(email && password){
+        alert(`Signing up as: ${email}`);
+      } else {
+        alert("Please fill in both fields to sign up.");
+      }
+    }
+  </script>
+</body>
+</html>

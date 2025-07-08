@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Top Programming Languages 2024</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #121212, #1f1f1f);
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      margin: 40px 0 10px;
+      font-size: 2.2rem;
+      text-align: center;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stack-container {
+      width: 95%;
+      max-width: 800px;
+      padding: 20px;
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      transform-origin: top;
+      animation: slideIn 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .card:nth-child(even) {
+      animation-delay: 0.1s;
+    }
+
+    .card:nth-child(odd) {
+      animation-delay: 0.2s;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .rank {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .name {
+      font-size: 1.4rem;
+      flex: 1;
+      text-align: center;
+    }
+
+    .promote-btn {
+      padding: 8px 14px;
+      background: #007aff;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .promote-btn:hover {
+      background: #005fcc;
+      transform: scale(1.1);
+    }
+
+    .lang-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 20px 0;
+    }
+
+    .lang-table th,
+    .lang-table td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+
+    .lang-table th {
+      background-color: #f0f0f0;
+    }
+
+    @media (max-width: 600px) {
+      .rank { font-size: 1.2rem; }
+      .name { font-size: 1.1rem; }
+      .promote-btn { font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>STANDINGS</h1>
+  <div class="stack-container" id="stack"></div>
+
+  <script>
+    const languages = [
+      {
+        rank: 1,
+        name: "Python",
+        details: {
+          use: "Web Dev, AI, Data Science",
+          released: "1991",
+          creator: "Guido van Rossum",
+          popularFor: "Easy syntax, rich libraries"
+        }
+      },
+      {
+        rank: 2,
+        name: "Java",
+        details: {
+          use: "Enterprise, Mobile, Web",
+          released: "1995",
+          creator: "James Gosling",
+          popularFor: "Portability (JVM), stability"
+        }
+      },
+      {
+        rank: 3,
+        name: "JavaScript",
+        details: {
+          use: "Web Development, Frontend",
+          released: "1995",
+          creator: "Brendan Eich",
+          popularFor: "Interactivity in browsers"
+        }
+      },
+      {
+        rank: 4,
+        name: "C#",
+        details: {
+          use: "Desktop, Web, Game Dev",
+          released: "2000",
+          creator: "Microsoft",
+          popularFor: ".NET platform support"
+        }
+      },
+      {
+        rank: 5,
+        name: "C/C++",
+        details: {
+          use: "System Programming, Embedded",
+          released: "1972 (C), 1985 (C++)",
+          creator: "Dennis Ritchie / Bjarne Stroustrup",
+          popularFor: "Speed, hardware access"
+        }
+      },
+      {
+        rank: 6,
+        name: "SQL",
+        details: {
+          use: "Databases, Data Analysis",
+          released: "1974",
+          creator: "Donald Chamberlin & Raymond Boyce",
+          popularFor: "Database querying"
+        }
+      },
+      {
+        rank: 7,
+        name: "Swift",
+        details: {
+          use: "iOS App Development",
+          released: "2014",
+          creator: "Apple Inc.",
+          popularFor: "Safe, fast, Apple ecosystem"
+        }
+      },
+      {
+        rank: 8,
+        name: "Go",
+        details: {
+          use: "Cloud, Backend, Tools",
+          released: "2009",
+          creator: "Google",
+          popularFor: "Concurrency, simplicity"
+        }
+      },
+      {
+        rank: 9,
+        name: "Visual Basic",
+        details: {
+          use: "Windows Apps, Legacy systems",
+          released: "1991",
+          creator: "Microsoft",
+          popularFor: "Simplicity in Windows GUI"
+        }
+      }
+    ];
+
+    const stack = document.getElementById("stack");
+
+    function renderStack() {
+      stack.innerHTML = '';
+      languages.forEach((lang, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="rank">#${lang.rank}</div>
+            <div class="name">${lang.name}</div>
+            <button class="promote-btn">↑</button>
+          </div>
+          <table class="lang-table">
+            <tr><th>Use</th><td>${lang.details.use}</td></tr>
+            <tr><th>Released</th><td>${lang.details.released}</td></tr>
+            <tr><th>Creator</th><td>${lang.details.creator}</td></tr>
+            <tr><th>Popular For</th><td>${lang.details.popularFor}</td></tr>
+          </table>
+        `;
+
+        card.querySelector(".promote-btn").onclick = () => {
+          if (index > 0) {
+            [languages[index - 1], languages[index]] = [languages[index], languages[index - 1]];
+            languages.forEach((l, i) => l.rank = i + 1);
+            renderStack();
+          }
+        };
+
+        stack.appendChild(card);
+      });
+    }
+
+    renderStack();
+  </script>
+</body>
+</html>
